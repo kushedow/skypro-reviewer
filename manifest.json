@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Skypro Reviewer",
+  "version": "0.2",
+  "description": "Check Homework reviews",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "options_page": "options.html",
+  "permissions": ["activeTab", "sessions", "debugger", "storage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "host_permissions": ["*://*.docs.google.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.student-care.sky.pro/ticket/*"],
+      "js": [
+        "scripts/csvtojson.min.js",
+        "scripts/render_template.js",
+        "scripts/content_handlers.js",
+        "content.js"
+      ],
+      "css": ["style.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["templates/checklist.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+}

@@ -1,0 +1,32 @@
+<h3>Критерии проверки</h3>
+
+<form  id="checklist__form">
+{{#each items}}
+<details id="checklist__details__{{this.index}}">
+    <summary>{{this.title}}</summary>
+    <div class="checklist-options" id="checklist__options__{{this.index}}">
+
+        <div >
+            <input type="radio" name="checklist__{{this.index}}" value="5"><label>{{this.5}}</label>
+        </div>
+
+        <div >
+            <input type="radio" name="checklist__{{this.index}}" value="4"><label>{{this.4}}</label>
+        </div>
+
+        <div >
+            <input type="radio" name="checklist__{{this.index}}" value="3"><label>{{this.3}}</label>
+        </div>
+
+    </div>
+</details>
+{{/each}}
+<div class="checklist__form__controls">
+    <button type="button" id="checklist__form__generate">
+        Сгенерировать обратную связь
+    </button>
+    <button type="button" id="checklist__form__improve">
+        Улучшить мотивацию с помощью AI
+    </button>
+
+</div>

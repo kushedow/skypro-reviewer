@@ -1,0 +1,42 @@
+body {font-family: sans-serif, Arial; }
+
+.review-popup {
+    min-width: 550px;
+    padding: 12px 18px 18px 18px;
+    background-color: #EBF2F5;
+
+}
+
+.review-popup button,  .review-popup .button{
+
+    padding: 6px 6px;
+    border: none;
+    background-color: rgb(86, 94, 239);
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    text-decoration: none;
+
+}
+
+.review-popup hr {
+    margin:16px 0;
+}
+
+.review-popup .link {
+    color: #999;
+    font-size: 15px;
+}
+
+.form-control {
+
+    padding: 6px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    border:none;
+    min-width: 400px;
+
+}
+

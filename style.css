@@ -1,0 +1,42 @@
+.review-assistant {
+    margin-top: 16px;
+}
+
+.review-assistant details {
+    cursor: pointer;
+}
+
+.review-assistant summary::before {
+    background-color: #ddd;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    content: "";
+    border-radius:50%;
+    margin-right: 8px;
+    vertical-align: text-top;
+}
+
+.review-assistant details label{
+    margin-left: 8px;
+}
+
+.review-assistant .checklist-options {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    padding: 4px 8px;
+}
+
+
+.review-assistant button {
+    padding: 12px 16px;
+    border: none;
+    background-color: rgb(86, 94, 239);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.review-assistant .checklist__form__controls {
+    margin-top: 16px;
+}

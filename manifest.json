@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Skypro Reviewer",
-  "version": "0.2",
+  "version": "0.5",
   "description": "Check Homework reviews",
   "action": {
     "default_popup": "popup.html",
@@ -17,18 +17,23 @@
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "host_permissions": ["*://*.docs.google.com/*"],
+
   "content_scripts": [
     {
       "matches": ["*://*.student-care.sky.pro/ticket/*"],
       "js": [
         "scripts/csvtojson.min.js",
         "scripts/render_template.js",
+        "scripts/content_layout.js",
+        "scripts/content_data.js",
         "scripts/content_handlers.js",
+        "scripts/content_api.js",
         "content.js"
       ],
       "css": ["style.css"]
     }
   ],
+
   "web_accessible_resources": [
     {
       "resources": ["templates/checklist.html"],

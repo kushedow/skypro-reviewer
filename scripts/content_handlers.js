@@ -1,14 +1,20 @@
-function getCheckListLink() {
-    const links = document.querySelectorAll('a[href^="https://docs.google.com/spreadsheets"]');
-    for (const linkNode of links) {
-        if (linkNode.textContent.includes('Чеклист решения')) {
-            return linkNode.attributes.getNamedItem("href").value; // Возвращаем найденную ссылку и останавливаем поиск
-        }
-    }
-}
 
 
+function registerHandlers() {
 
-function handleGenerateReview() {
+    // Добавляем DOM документа обработчики нашими событиями после загрузки критериев
+
+    generateButton = document.getElementById("checklist__form__generate")
+    generateButton.addEventListener("click", buildReview)
+
+    improveButton = document.getElementById("checklist__form__improve")
+    improveButton.addEventListener("click", improveReview)
+
+    //
+    markButtons = document.querySelectorAll(".mark-area input")
+    markButtons.forEach(el => {
+        el.addEventListener('click', reportChecklistToServer);
+    });
+
 
 }

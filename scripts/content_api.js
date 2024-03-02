@@ -119,7 +119,7 @@ async function reportChecklistToServer(checklist) {
         headers: {'Content-Type': 'application/json;charset=utf-8'},
         body: JSON.stringify({
             checklist_data: checklist,
-            checklist_url: checklistURL,
+            sheet_id: checklistURL,
             ticket_id: 0
         })
     });

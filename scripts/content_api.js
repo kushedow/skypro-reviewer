@@ -112,16 +112,19 @@ async function reportChecklistToServer(checklist) {
      * Там на сервере разберемся, что за данные пришли
      */
 
-    // sheetID =
+    const reportData = {
+        checklist_data: checklist,
+        sheet_id: checklistURL,
+        ticket_id: getTicketID()
+    }
+
+    console.log("Reporting data to server")
+    console.log(reportData)
 
     const response = await fetch(SERVERURL+"/report", {
         method: "POST",
         headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify({
-            checklist_data: checklist,
-            sheet_id: checklistURL,
-            ticket_id: 0
-        })
+        body: JSON.stringify(reportData)
     });
 
     if (response.status !== 200) {

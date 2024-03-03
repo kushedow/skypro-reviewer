@@ -71,6 +71,10 @@ function getUserName() {
 
 }
 
+function getTicketID(){
+    return window.location.pathname.split("/").pop();
+}
+
 
 feedbackRender = {
 

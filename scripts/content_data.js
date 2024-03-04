@@ -53,7 +53,7 @@ function buildFeedback() {
 
             gradeIcon = emojis[checklistItem.grade]
             gradeText = checklistItem[checklistItem.grade]
-            reviewPointResult = `${gradeIcon} ${gradeText}`
+            reviewPointResult = `${gradeIcon}⠀${gradeText}⠀`
 
             feedbackText += `${reviewPointResult}\n`
 

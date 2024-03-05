@@ -11,11 +11,6 @@ function getGroupsFromChecklist() {
 
 function groupChecklist() {
 
-    // Я: вот есть чеклист, а если его перебирать, то как назвать элементы? Чекайтэмс?
-    // Внутренний голос: Чекаемс? Чекаю поки ти цю х*йню видалиш, дурень!!
-    // Я: чекбоксес!
-    // Внутренний голос: набагато краще!
-
     const group_names = getGroupsFromChecklist()
     let groups = []
 
@@ -38,7 +33,6 @@ function buildFeedback() {
     let feedbackText = ""
 
     for (const oneGroup of checklistGroups) {
-        console.log(oneGroup.items.length)
         if ((oneGroup.name !== undefined) && (oneGroup.items.length !== 0)) {
             feedbackText += `\n<b>${oneGroup.name}: </b>\n`
         } else {

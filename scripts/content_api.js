@@ -77,13 +77,14 @@ async function fetchAI(prompt) {
 async function loadChecklist(checklistURL) {
 
     /**
-     * Загружающем чеклист из гугл-дока через сервер
+     * Загружаем чеклист из гугл-дока через сервер
      * Формат [{title: ... , 5: ... , 4: ... , 3: ... , topic: ... , group: ... , solution: ... }]
      */
 
     let result = {};
 
     try {
+        console.log(`fetching ${checklistURL}`)
         const response = await fetch(checklistURL); // завершается с заголовками ответа
         if (response.status !== 200) {
             alert("Не удалось загрузить критерии. Обратитесь к разработчику")

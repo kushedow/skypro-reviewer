@@ -35,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     document.getElementById("review-popup__custom__trigger").addEventListener("click", function(e){
-
         const checklistLink = document.getElementById("review-popup__custom__source").value
+        alert("Loading custom checklist "+checklistLink)
         pushChecklistToContent(checklistLink).then()
 
     })

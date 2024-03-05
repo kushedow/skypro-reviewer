@@ -25,6 +25,12 @@ function renderTemplate(template, data) {
         return typeof result === 'undefined' ? defaultValue : result;
     }
 
+    function applyModifier(value, modifier) {
+        if (modifier === "trim") {
+            return value.split("///")[0].split("\n").join("<br/>");
+        }
+    }
+
     // Обработка циклов
     template = template.replace(/{{#each (\w+(?:\.\w+)*)}}([\s\S]+?){{\/each}}/g, handleEach);
 
@@ -32,7 +38,11 @@ function renderTemplate(template, data) {
     template = template.replace(/{{#if (\w+(?:\.\w+)*)}}([\s\S]+?){{\/if}}/g, handleIf);
 
     // Обработка обычных включений и вложенных объектов
-    template = template.replace(/{{([\w\.]+)}}/g, (match, p1) => get(data, p1));
+    template = template.replace(/{{([\w\.]+)(\|\w+)?}}/g, (match, p1, p2) => {
+        let variableValue = get(data, p1);
+        if (p2) { variableValue = applyModifier(variableValue, p2.slice(1))}
+        return variableValue;
+    });
 
     return template;
 }

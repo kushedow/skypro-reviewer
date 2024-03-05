@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Skypro Reviewer",
-  "version": "0.6",
+  "version": "0.8",
   "description": "Check Homework reviews",
   "action": {
     "default_popup": "popup.html",

@@ -38,7 +38,7 @@ async function improveReview() {
     saveReviewToEditor(getRandomLoaderText())
     // Загружаем промпт из настроек
 
-    promptFull = promptCurrent + ` \n\n Имя ученика: ${userName} \n\n` + promptBefore + currentFeedback + promptAfter
+    promptFull = promptCurrent + ` \n\n Имя ученика: ${userName.first} \n\n` + promptBefore + currentFeedback + promptAfter
 
     const result = await fetchAI(promptFull)
     saveReviewToEditor(result + "\n" + currentFeedback)
@@ -106,7 +106,7 @@ async function loadChecklist(checklistURL) {
 }
 
 
-async function reportChecklistToServer(checklist) {
+async function reportChecklistToServer(event) {
 
     /**
      * Отправляем результат проверки на сервер в формате полного чеклиста
@@ -116,27 +116,37 @@ async function reportChecklistToServer(checklist) {
     const reportData = {
         checklist_data: checklist,
         sheet_id: checklistURL,
-        ticket_id: getTicketID()
+        ticket_id: getTicketID(),
+        student_name: userName.full
     }
 
-    console.log("Reporting data to server")
-    console.log(reportData)
+    try {
+        const response = await fetch(SERVERURL+"/report", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json;charset=utf-8'},
+            body: JSON.stringify(reportData)
+        });
 
-    const response = await fetch(SERVERURL+"/report", {
-        method: "POST",
-        headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify(reportData)
-    });
-
-    if (response.status !== 200) {
-        alert("Не удалось отправить результат проверки. Обратитесь к разработчику")
-        return null
+        // Проверка статуса HTTP ответа
+        if (response.ok) { // Если статус код в диапазоне 200-299
+            // Попытка прочитать и вывести тело ответа как JSON
+            const jsonData = await response.json();
+            console.log("Данные успешно получены:", jsonData);
+        } else {
+            // Вывод ошибки, если статус код !=200
+            console.error("Ошибка:", response.status);
+            // Попытка прочитать тело ответа для получения дополнительной информации
+            try {
+                const errorData = await response.json(); // Предполагается, что сервер отправляет ошибку в формате JSON
+                console.error("Данные ошибки:", errorData);
+            } catch (errorParsingError) {
+                console.error("Не удалось распарсить данные ошибки.");
+            }
+        }
+    } catch (error) {
+        // Если возникла ошибка при отправке запроса или во время выполнения кода обработчика
+        console.error("Ошибка при выполнении запроса:", error);
     }
-
-    const result = await response.json();
-
-    console.log("Отправлен результат проверки")
-    console.log(result.response)
 
 }
 

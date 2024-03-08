@@ -58,5 +58,40 @@ function buildFeedback() {
 
 }
 
+function createCriteriaResults() {
+
+    const criteriaResults = [];
+    const criteriaMap = {};
+
+    // Перебор всего checklist для сбора информации о критериях и оценках
+    for (const key in checklist) {
+
+        const item = checklist[key];
+
+
+        const { criteria, grade } = item;
+        const gradeValue = parseInt(grade, 10);
+
+        if (criteria === undefined) { continue }
+
+        // Если критерий уже встречался, обновляем значение, если оно меньше
+        if (criteriaMap[criteria] !== undefined) {
+            criteriaMap[criteria] = Math.min(criteriaMap[criteria], gradeValue);
+        } else {
+            criteriaMap[criteria] = gradeValue;
+        }
+    }
+
+    // Сбор данных в итоговую структуру
+    for (const criteria in criteriaMap) {
+        criteriaResults.push({ name: criteria, value: criteriaMap[criteria] });
+    }
+
+    console.log(criteriaResults)
+
+    return criteriaResults;
+
+}
+
 
 

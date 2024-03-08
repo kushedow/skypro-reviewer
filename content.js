@@ -1,6 +1,6 @@
 checklist = {}
 checklistURL = ""
-userName = ""
+userName = {first: "", full: ""}
 
 chrome.runtime.onMessage.addListener(
     async function (request, sender, sendResponse) {
@@ -32,9 +32,6 @@ chrome.runtime.onMessage.addListener(
             return true
         }
     });
-
-
-
 
 // загружаем шаблон проверки
 

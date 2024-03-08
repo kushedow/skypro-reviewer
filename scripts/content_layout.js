@@ -67,7 +67,9 @@ function getCheckListLink() {
 function getUserName() {
     // Вытаскиваем имя ученика
     const nameNode = document.querySelector(".info > .info-item > span.info-value");
-    return nameNode.innerHTML.split(" ")[0]
+
+    const fullName = nameNode.innerHTML.split(" ")
+    return {first: fullName[0], full: `${fullName[0]} ${fullName[1]}`}
 
 }
 
@@ -98,4 +100,50 @@ feedbackRender = {
         const checklistRendered = this.render(this.templateCode, checklistItems)
         reviewContainer.innerHTML = checklistRendered
     }
+}
+
+function getCriteriaContainer(){
+
+    const parentSelector = ".mark-container"
+    const containerSelector = ".mark-container .message-container__criteria"
+
+    let criteriaContainer = document.querySelector(containerSelector)
+
+    // Если контейнер уже есть – возвращаем
+    if (criteriaContainer) {
+        return criteriaContainer
+    }
+
+    // Если контейнера нет – создаем его
+    const parentContainer = document.querySelector(parentSelector)
+
+    criteriaContainer = document.createElement('div');
+    criteriaContainer.classList.add("message-container__criteria")
+    parentContainer.prepend(criteriaContainer)
+
+    return criteriaContainer
+
+}
+
+function renderCriteria(criteriaResults, container) {
+
+    const emojis = {5: "✅", 4: "⚠️️", 3: "❌"}
+
+    /** Выводит критерии под кнопками */
+
+    container.innerHTML=""
+
+    if (criteriaResults.length === 0) { return }
+
+    const criteriaHeader = document.createElement("h3")
+    criteriaHeader.innerHTML = "Критерии для рубрикатора"
+    container.append(criteriaHeader)
+
+    criteriaResults.forEach((criteria) => {
+        const elementToPush = document.createElement("div");
+        elementToPush.classList.add("message-container__criteria__item")
+        elementToPush.innerHTML = `${emojis[criteria.value]} ${criteria.name}: ${criteria.value}`
+        container.append(elementToPush)
+    })
+
 }

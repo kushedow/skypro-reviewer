@@ -4,18 +4,18 @@
 {{#each items}}
 <details id="checklist__details__{{this.index}}">
     <summary>{{this.title}}</summary>
-    <div class="checklist-options" id="checklist__options__{{this.index}}">
+    <div class="checklist-options" id="checklist__options__{{this.index}}" data-index="{{this.index}}">
 
         <div >
-            <input type="radio" name="checklist__{{this.index}}" value="5"><label>{{this.5|trim}}</label>
+            <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="5"><label>{{this.5|trim}}</label>
         </div>
 
         <div >
-            <input type="radio" name="checklist__{{this.index}}" value="4"><label>{{this.4|trim}}</label>
+            <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="4"><label>{{this.4|trim}}</label>
         </div>
 
         <div >
-            <input type="radio" name="checklist__{{this.index}}" value="3"><label>{{this.3|trim}}</label>
+            <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="3"><label>{{this.3|trim}}</label>
         </div>
 
     </div>

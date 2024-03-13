@@ -24,6 +24,14 @@ function retrieveFormData() {
 
 }
 
+function highlightCheckboxGroup(GroupIndex, grade) {
+
+    const detailsNode = document.getElementById('checklist__details__' + GroupIndex);
+    detailsNode.removeAttribute("class");
+    detailsNode.classList.add("checklist__grade--"+grade)
+
+}
+
 function getRandomLoaderText() {
     const preloaders = ['Подождите несколько секунд, ставим свечку за здоровье техлида...', 'Роемся в пачке с гугл-таблицами, еще несколько секунд...', 'Ожидайте ... удаляем цитаты про волка...', 'Подождите, получаем альтушку на госуслугах...', 'Пару секунд ... Обучаем нейронку на цитатах Харитона...'];
     const index = Math.floor(Math.random() * preloaders.length);

@@ -14,8 +14,22 @@
     content: "";
     border-radius:50%;
     margin-right: 8px;
-    vertical-align: text-top;
+    vertical-align: middle;
+    margin-bottom: 3px;
 }
+
+.review-assistant .checklist__grade--5 summary::before {
+    background-color: #6FCF97;
+}
+
+.review-assistant .checklist__grade--4 summary::before {
+    background-color: #F2C94C;
+}
+
+.review-assistant .checklist__grade--3 summary::before {
+    background-color: #f2714a;
+}
+
 
 .review-assistant details label{
     margin-left: 8px;

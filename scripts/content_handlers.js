@@ -26,5 +26,18 @@ function registerHandlers() {
 
     });
 
+    //  Добавляем раскрашивание в разные цвета после выяделения радиокнопок
+    radios =  document.querySelectorAll("#checklist__form .checklist-options input")
+    radios.forEach(el => {
+
+        el.addEventListener('change', (e) => {
+            grade = e.target.getAttribute("value")
+            groupIndex = e.target.dataset.index
+            highlightCheckboxGroup(groupIndex, grade)
+        })
+
+
+    });
+
 
 }

@@ -55,27 +55,37 @@ function getReviewContainer(querySelector = ".review-assistant") {
 }
 
 
-function getCheckListLink() {
-    const links = document.querySelectorAll('a[href^="https://docs.google.com/spreadsheets"]');
-    for (const linkNode of links) {
-        if (linkNode.textContent.includes('Чеклист решения')) {
-            return linkNode.attributes.getNamedItem("href").value; // Возвращаем найденную ссылку и останавливаем поиск
-        }
+function getTicketData(){
+    /* Выгружаем все полезные данные со странички чтобы отправить на сервер */
+
+    const dataNodes = document.querySelectorAll(".info > .info-item > span.info-value");
+    // Имя студента - полное и короткое
+    const studentFullName = dataNodes[0].innerHTML
+    const studentFirstName = studentFullName.split(" ")[0].trim()
+    // Название потока
+    const streamName = dataNodes[1].innerHTML.split(" / ")[1].trim()
+    // Имя ментора
+    const mentorFullName = dataNodes[2].innerHTML.trim()
+    // Ссылку на критерии
+    const criteriaNode = document.querySelector('a[href^="https://docs.google.com/spreadsheets"]');
+    if (criteriaNode) {
+        criteriaURL = criteriaNode.attributes.getNamedItem("href").value; // Возвращаем найденную ссылку и останавливаем поиск
+    } else{
+        criteriaURL = ""
     }
+
+    const ticketData = {
+        ticket_id: window.location.pathname.split("/").pop(),
+        student_full_name: studentFullName,
+        student_first_name: studentFirstName,
+        stream_name: streamName,
+        mentor_full_name: mentorFullName,
+        criteria_url: criteriaURL
+    }
+
+    return ticketData
 }
 
-function getUserName() {
-    // Вытаскиваем имя ученика
-    const nameNode = document.querySelector(".info > .info-item > span.info-value");
-
-    const fullName = nameNode.innerHTML.split(" ")
-    return {first: fullName[0], full: `${fullName[0]} ${fullName[1]}`}
-
-}
-
-function getTicketID(){
-    return window.location.pathname.split("/").pop();
-}
 
 
 feedbackRender = {

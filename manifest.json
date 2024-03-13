@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Skypro Reviewer",
-  "version": "0.9",
-  "description": "Check Homework reviews",
+  "version": "0.10",
+  "description": "Check homework faster, create reviews better!",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -22,7 +22,6 @@
     {
       "matches": ["*://*.student-care.sky.pro/ticket/*"],
       "js": [
-        "scripts/csvtojson.min.js",
         "scripts/render_template.js",
         "scripts/content_layout.js",
         "scripts/content_data.js",

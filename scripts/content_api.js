@@ -27,6 +27,7 @@ async function loadPromptFromOptions() {
 
 async function improveReview() {
 
+    const userName = getTicketData().student_first_name
 
     promptCurrent = await loadPromptFromOptions()
     promptBefore = "<НАЧАЛО>"
@@ -38,7 +39,7 @@ async function improveReview() {
     saveReviewToEditor(getRandomLoaderText())
     // Загружаем промпт из настроек
 
-    promptFull = promptCurrent + ` \n\n Имя ученика: ${userName.first} \n\n` + promptBefore + currentFeedback + promptAfter
+    promptFull = promptCurrent + ` \n\n Имя ученика: ${userName} \n\n` + promptBefore + currentFeedback + promptAfter
 
     const result = await fetchAI(promptFull)
     saveReviewToEditor(result + "\n" + currentFeedback)
@@ -52,12 +53,19 @@ async function fetchAI(prompt) {
      * Сервер отправляет запрос на OPEN AI, запрос синхронный, работает долго
      */
 
+
+    const fetchData = {
+        ...getTicketData(),
+        q: prompt
+    }
+
     console.log("Запрашивем у нейронки промпт")
+    console.log(fetchData)
 
     const response = await fetch(SERVERURL+"/generate", {
         method: "POST",
         headers: {'Content-Type': 'application/json;charset=utf-8'},
-        body: JSON.stringify({q: prompt})
+        body: JSON.stringify(fetchData)
     });
 
     if (response.status !== 200) {
@@ -74,7 +82,15 @@ async function fetchAI(prompt) {
 }
 
 
-async function loadChecklist(checklistURL) {
+async function loadChecklistFromServer(sheet_id) {
+
+    function _convertListToIndexedObject(raw_checklist) {
+        const indexedChecklist = raw_checklist.reduce((acc, item, index) => {
+            acc[index] = {index, ...item};
+            return acc;
+        }, {});
+        return indexedChecklist
+    }
 
     /**
      * Загружаем чеклист из гугл-дока через сервер
@@ -83,25 +99,39 @@ async function loadChecklist(checklistURL) {
 
     let result = {};
 
+    const url = new URL(SERVERURL+"/checklist")
+
+    const fetchData = {
+        ...getTicketData(),
+        sheet_id: sheet_id
+    }
+
+    console.log("Запрашиваем чеклист с сервера")
+    console.log(fetchData)
+
     try {
-        console.log(`fetching ${checklistURL}`)
-        const response = await fetch(checklistURL); // завершается с заголовками ответа
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {'Content-Type': 'application/json;charset=utf-8'},
+            body: JSON.stringify(fetchData)
+        });
+
         if (response.status !== 200) {
             alert("Не удалось загрузить критерии. Обратитесь к разработчику")
             return null
         }
+
         result = await response.json(); // читать тело ответа в формате JSON
+
     } catch (error) {
         alert("Ошибка при загрузке критериев. Обратитесь к разработчику")
         return null
     }
 
-    const indexedChecklist = result.reduce((acc, item, index) => {
-        acc[index] = {index, ...item};
-        return acc;
-    }, {});
+     const indexedChecklist = _convertListToIndexedObject(result)
 
-    return indexedChecklist
+     return indexedChecklist
 
 }
 
@@ -114,14 +144,18 @@ async function reportChecklistToServer(event) {
      */
 
     const reportData = {
-        checklist_data: checklist,
-        sheet_id: checklistURL,
-        ticket_id: getTicketID(),
-        student_name: userName.full
+        ...getTicketData(),
+        checklist_data: checklist
     }
 
+    const url = new URL(SERVERURL+"/report")
+
+    console.log("Sending report to server", url)
+    console.log(reportData)
+
+
     try {
-        const response = await fetch(SERVERURL+"/report", {
+        const response = await fetch(url, {
             method: "POST",
             headers: {'Content-Type': 'application/json;charset=utf-8'},
             body: JSON.stringify(reportData)
@@ -131,7 +165,7 @@ async function reportChecklistToServer(event) {
         if (response.ok) { // Если статус код в диапазоне 200-299
             // Попытка прочитать и вывести тело ответа как JSON
             const jsonData = await response.json();
-            console.log("Данные успешно получены:", jsonData);
+            console.log("Отчет принят сервером, полученф данные:", jsonData);
         } else {
             // Вывод ошибки, если статус код !=200
             console.error("Ошибка:", response.status);
@@ -145,7 +179,7 @@ async function reportChecklistToServer(event) {
         }
     } catch (error) {
         // Если возникла ошибка при отправке запроса или во время выполнения кода обработчика
-        console.error("Ошибка при выполнении запроса:", error);
+        console.error("Ошибка при оправке отчета:", error);
     }
 
 }

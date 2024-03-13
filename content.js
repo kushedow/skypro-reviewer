@@ -1,23 +1,20 @@
+// глобальный объект для хранения чеклиста
 checklist = {}
-checklistURL = ""
-userName = {first: "", full: ""}
 
 chrome.runtime.onMessage.addListener(
     async function (request, sender, sendResponse) {
 
         if (request.message === "show_checklist") {
 
-            // вытаскиваем имя ученика
-            userName = getUserName()
-            console.log(`Получено имя ${userName}`)
-
             // вытаскиваем из переданного события адрес чеклиста
-            checklistURL =  request.source
+            const checklistURL =  request.source
+
+            const sheet_id = checklistURL.split("/").reduce((a, b) => a.length > b.length ? a : b)
+            // загружаем с сервера чеклист
+            const checklistObject = await loadChecklistFromServer(sheet_id)
+
 
             getReviewContainer(".review-assistant")
-
-            // зашгружаем с сервера чеклист
-            const checklistObject = await loadChecklist(checklistURL)
 
             // записываем в глобальную переменную чеклист
             checklist = checklistObject
@@ -34,5 +31,4 @@ chrome.runtime.onMessage.addListener(
     });
 
 // загружаем шаблон проверки
-
-console.log("content scripts initialised")
+console.log("Sky.pro Reviewer activated")

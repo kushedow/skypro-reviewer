@@ -68,7 +68,6 @@ function createCriteriaResults() {
 
         const item = checklist[key];
 
-
         const { criteria, grade } = item;
         const gradeValue = parseInt(grade, 10);
 
@@ -85,7 +84,7 @@ function createCriteriaResults() {
     // Сбор данных в итоговую структуру
     for (const criteria in criteriaMap) {
         criteriaResults.push({ name: criteria, value: criteriaMap[criteria] });
-    }
+    }   
 
     console.log(criteriaResults)
 

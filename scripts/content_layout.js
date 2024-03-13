@@ -21,7 +21,6 @@ function retrieveFormData() {
         value = formData.get(field_name)
         checklist[checklistItem.index].grade = value
     }
-
 }
 
 function highlightCheckboxGroup(GroupIndex, grade) {
@@ -70,11 +69,14 @@ function getTicketData(){
     // Имя студента - полное и короткое
     const studentFullName = dataNodes[0].innerHTML
     const studentFirstName = studentFullName.split(" ")[0].trim()
+
+    // Название потока
+    const taskName = dataNodes[1].innerHTML.split(" / ")[0].trim()
     // Название потока
     const streamName = dataNodes[1].innerHTML.split(" / ")[1].trim()
     // Имя ментора
     const mentorFullName = dataNodes[2].innerHTML.trim()
-    // Ссылку на критерии
+    // Ссылку на критерииы
     const criteriaNode = document.querySelector('a[href^="https://docs.google.com/spreadsheets"]');
     if (criteriaNode) {
         criteriaURL = criteriaNode.attributes.getNamedItem("href").value; // Возвращаем найденную ссылку и останавливаем поиск
@@ -86,6 +88,7 @@ function getTicketData(){
         ticket_id: window.location.pathname.split("/").pop(),
         student_full_name: studentFullName,
         student_first_name: studentFirstName,
+        task_name: taskName,
         stream_name: streamName,
         mentor_full_name: mentorFullName,
         criteria_url: criteriaURL

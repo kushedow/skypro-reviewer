@@ -42,9 +42,12 @@ async function improveReview() {
     promptFull = promptCurrent + ` \n\n Имя ученика: ${userName} \n\n` + promptBefore + currentFeedback + promptAfter
 
     const result = await fetchAI(promptFull)
-    saveReviewToEditor(result + "\n" + currentFeedback)
+
+    renderImprovedReview(result, currentFeedback)
 
 }
+
+
 
 async function fetchAI(prompt) {
 

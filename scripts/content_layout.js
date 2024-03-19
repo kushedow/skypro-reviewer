@@ -24,7 +24,7 @@ function retrieveFormData() {
 }
 
 function highlightCheckboxGroup(GroupIndex, grade) {
-
+    /* Подсвечивает кружочек у критерия после простановки оценки */
     const detailsNode = document.getElementById('checklist__details__' + GroupIndex);
     detailsNode.removeAttribute("class");
     detailsNode.classList.add("checklist__grade--"+grade)
@@ -32,6 +32,7 @@ function highlightCheckboxGroup(GroupIndex, grade) {
 }
 
 function getRandomLoaderText() {
+    /* Случайное сообщение во время ожидания */
     const preloaders = ['Подождите несколько секунд, ставим свечку за здоровье техлида...', 'Роемся в пачке с гугл-таблицами, еще несколько секунд...', 'Ожидайте ... удаляем цитаты про волка...', 'Подождите, получаем альтушку на госуслугах...', 'Пару секунд ... Обучаем нейронку на цитатах Харитона...'];
     const index = Math.floor(Math.random() * preloaders.length);
     return preloaders[index];
@@ -166,5 +167,16 @@ function renderCriteria(criteriaResults, container) {
         elementToPush.innerHTML = `${emojis[criteria.value]} ${criteria.name}: ${criteria.value}`
         container.append(elementToPush)
     })
+
+}
+
+function renderImprovedReview(AIFeedback, currentFeedback){
+
+    const AIBlocks = AIFeedback.split("///")
+    const AIFeedbackBefore = AIBlocks[0]
+
+    if (AIBlocks[1]) { AIFeedbackAfter = AIBlocks[1]} else { AIFeedbackAfter = ""}
+
+    saveReviewToEditor(AIFeedbackBefore + "\n" + currentFeedback + "\n" + AIFeedbackAfter)
 
 }

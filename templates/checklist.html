@@ -5,9 +5,7 @@
 <details id="checklist__details__{{this.index}}">
     <summary>{{this.title}}</summary>
     <div class="checklist-options" id="checklist__options__{{this.index}}" data-index="{{this.index}}">
-
         {{#if this.hint}} <div><small><b>{{this.hint}}</b></small></div>{{/if}}
-
         <div >
             <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="5">{{this.5|trim}}</label>
         </div>
@@ -19,7 +17,7 @@
         <div >
             <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="3">{{this.3|trim}}</label>
         </div>
-
+        <textarea class="checklist__note" name="note__{{this.index}}" placeholder="Напиши замечания тут"></textarea>
     </div>
 </details>
 {{/each}}

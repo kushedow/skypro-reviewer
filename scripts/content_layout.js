@@ -17,9 +17,12 @@ function retrieveFormData() {
     // Затем создаём новый экземпляр объекта FormData, передавая ему нашу форму
     const formData = new FormData(form);
     for (const checklistItem of Object.values(checklist)) {
-        field_name = "checklist__" + checklistItem.index
-        value = formData.get(field_name)
-        checklist[checklistItem.index].grade = value
+
+        const radio_name = "checklist__" + checklistItem.index
+        checklist[checklistItem.index].grade = formData.get(radio_name)
+
+        const note_name = "note__" + checklistItem.index
+        checklist[checklistItem.index].note = formData.get(note_name)
     }
 }
 
@@ -161,9 +164,13 @@ function renderCriteria(criteriaResults, container) {
     container.append(criteriaHeader)
 
     criteriaResults.forEach((criteria) => {
+
+
         const elementToPush = document.createElement("div");
         elementToPush.classList.add("message-container__criteria__item")
         elementToPush.innerHTML = `${emojis[criteria.value]} ${criteria.name}: ${criteria.value}`
+        if (criteria.note) {}
+
         container.append(elementToPush)
     })
 

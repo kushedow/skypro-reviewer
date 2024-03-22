@@ -20,6 +20,8 @@
     transition-duration: 400ms;
 }
 
+
+
 .review-assistant .checklist__grade--5 summary::before {
     background-color: #6FCF97;
 }
@@ -32,12 +34,28 @@
     background-color: #f2714a;
 }
 
+.review-assistant .checklist__note {display: none;}
+.review-assistant .checklist__grade--3 .checklist__note,
+.review-assistant .checklist__grade--4 .checklist__note
+{
+    border: none;
+    border-radius: 6px;
 
-.review-assistant details input{
+    display: block;
+    width: 95%;
+    margin: 6px 0 6px 16px;
+    padding: 6px;
+
+    background-color: #DBEFFD;
+}
+
+
+.review-assistant details input[type="radio"]{
     margin-right: 8px;
     margin-left: 16px;
     transform: scale(1.3);
 }
+
 
 .review-assistant .checklist-options {
     border: 1px solid #eee;

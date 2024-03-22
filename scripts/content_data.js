@@ -41,13 +41,17 @@ function buildFeedback() {
 
         for (const checklistItem of oneGroup.items) {
 
-            if (checklistItem.grade == null) {
-                continue;
-            }
+            // Игнорим пункты, где нет оценок
+            if (checklistItem.grade == null) { continue; }
 
-            gradeIcon = emojis[checklistItem.grade]
-            gradeText = checklistItem[checklistItem.grade].replace("///", "")
-            reviewPointResult = `${gradeIcon}⠀${gradeText}⠀`
+            let gradeIcon = emojis[checklistItem.grade]
+            let gradeText = checklistItem[checklistItem.grade].replace("///", "")
+            let reviewPointResult = `${gradeIcon}⠀${gradeText}⠀`
+
+            // Добавляем заметки, написанные ментором
+            if (checklistItem) {
+                reviewPointResult += `\n${checklistItem.note}`
+            }
 
             feedbackText += `${reviewPointResult}\n`
 

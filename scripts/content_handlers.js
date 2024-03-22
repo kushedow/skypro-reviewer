@@ -10,7 +10,7 @@ function registerHandlers() {
         buildReview()
         const container = getCriteriaContainer()
         const criteriaResult = createCriteriaResults()
-        renderCriteria(criteriaResult, container)
+        // renderCriteria(criteriaResult, container)
 
     })
 

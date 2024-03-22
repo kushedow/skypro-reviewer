@@ -99,7 +99,6 @@ function getTicketData(){
 }
 
 
-
 feedbackRender = {
 
     templateCode: null,
@@ -173,9 +172,9 @@ function renderCriteria(criteriaResults, container) {
 function renderImprovedReview(AIFeedback, currentFeedback){
 
     const AIBlocks = AIFeedback.split("///")
-    const AIFeedbackBefore = AIBlocks[0]
+    const AIFeedbackBefore = AIBlocks[0].trim()
 
-    if (AIBlocks[1]) { AIFeedbackAfter = AIBlocks[1]} else { AIFeedbackAfter = ""}
+    if (AIBlocks[1]) { AIFeedbackAfter = AIBlocks[1].trim()} else { AIFeedbackAfter = ""}
 
     saveReviewToEditor(AIFeedbackBefore + "\n" + currentFeedback + "\n" + AIFeedbackAfter)
 

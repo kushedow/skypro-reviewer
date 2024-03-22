@@ -6,16 +6,18 @@
     <summary>{{this.title}}</summary>
     <div class="checklist-options" id="checklist__options__{{this.index}}" data-index="{{this.index}}">
 
+        {{#if this.hint}} <div><small><b>{{this.hint}}</b></small></div>{{/if}}
+
         <div >
-            <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="5"><label>{{this.5|trim}}</label>
+            <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="5">{{this.5|trim}}</label>
         </div>
         {{#if this.4}}
         <div >
-            <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="4"><label>{{this.4|trim}}</label>
+            <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="4">{{this.4|trim}}</label>
         </div>
         {{/if}}
         <div >
-            <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="3"><label>{{this.3|trim}}</label>
+            <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="3">{{this.3|trim}}</label>
         </div>
 
     </div>

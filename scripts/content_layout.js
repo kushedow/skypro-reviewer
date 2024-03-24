@@ -1,10 +1,14 @@
 function getCurrentEditorValue() {
+
+    /* Вытаскиваем содержание контейнера ревью */
     const editorElement = document.querySelector(".message-request .ql-editor")
     return editorElement.innerHTML
 
 }
 
 function saveReviewToEditor(content) {
+
+    /* Записывает текст в контейнер */
     const editorElement = document.querySelector(".message-request .ql-editor")
     editorElement.innerHTML = content
 }
@@ -12,10 +16,13 @@ function saveReviewToEditor(content) {
 
 function retrieveFormData() {
 
+    /* Загружает данные из формы в глобальные объект чеклиста  */
+
     // Сначала получаем ссылку на форму по её идентификатору
     const form = document.getElementById('checklist__form');
     // Затем создаём новый экземпляр объекта FormData, передавая ему нашу форму
     const formData = new FormData(form);
+
     for (const checklistItem of Object.values(checklist)) {
 
         const radio_name = "checklist__" + checklistItem.index
@@ -27,6 +34,7 @@ function retrieveFormData() {
 }
 
 function highlightCheckboxGroup(GroupIndex, grade) {
+
     /* Подсвечивает кружочек у критерия после простановки оценки */
     const detailsNode = document.getElementById('checklist__details__' + GroupIndex);
     detailsNode.removeAttribute("class");
@@ -35,6 +43,7 @@ function highlightCheckboxGroup(GroupIndex, grade) {
 }
 
 function getRandomLoaderText() {
+
     /* Случайное сообщение во время ожидания */
     const preloaders = ['Подождите несколько секунд, ставим свечку за здоровье техлида...', 'Роемся в пачке с гугл-таблицами, еще несколько секунд...', 'Ожидайте ... удаляем цитаты про волка...', 'Подождите, получаем альтушку на госуслугах...', 'Пару секунд ... Обучаем нейронку на цитатах Харитона...'];
     const index = Math.floor(Math.random() * preloaders.length);
@@ -44,6 +53,7 @@ function getRandomLoaderText() {
 
 function getReviewContainer(querySelector = ".review-assistant") {
 
+    /* Создает контейнер для критериев */
     let reviewContainer = document.querySelector(querySelector)
 
     // Если контейнер уже есть – возвращаем
@@ -67,8 +77,8 @@ function getReviewContainer(querySelector = ".review-assistant") {
 
 
 function getTicketData(){
-    /* Выгружаем все полезные данные со странички чтобы отправить на сервер */
 
+    /* Выгружаем все полезные данные со странички чтобы отправить на сервер */
     const dataNodes = document.querySelectorAll(".info > .info-item > span.info-value");
     // Имя студента - полное и короткое
     const studentFullName = dataNodes[0].innerHTML
@@ -82,13 +92,10 @@ function getTicketData(){
     const mentorFullName = dataNodes[2].innerHTML.trim()
     // Ссылку на критерииы
     const criteriaNode = document.querySelector('a[href^="https://docs.google.com/spreadsheets"]');
-    if (criteriaNode) {
-        criteriaURL = criteriaNode.attributes.getNamedItem("href").value; // Возвращаем найденную ссылку и останавливаем поиск
-    } else{
-        criteriaURL = ""
-    }
 
-    const ticketData = {
+    let criteriaURL = criteriaNode ? criteriaNode.attributes.getNamedItem("href").value : "";
+
+    return {
         ticket_id: window.location.pathname.split("/").pop(),
         student_full_name: studentFullName,
         student_first_name: studentFirstName,
@@ -97,8 +104,6 @@ function getTicketData(){
         mentor_full_name: mentorFullName,
         criteria_url: criteriaURL
     }
-
-    return ticketData
 }
 
 
@@ -121,68 +126,27 @@ feedbackRender = {
 
         const checklistItems = {items: Object.values(checklistObject)}
 
-        const checklistRendered = this.render(this.templateCode, checklistItems)
-        reviewContainer.innerHTML = checklistRendered
+        reviewContainer.innerHTML = this.render(this.templateCode, checklistItems)
     }
 }
 
-function getCriteriaContainer(){
-
-    const parentSelector = ".mark-container"
-    const containerSelector = ".mark-container .message-container__criteria"
-
-    let criteriaContainer = document.querySelector(containerSelector)
-
-    // Если контейнер уже есть – возвращаем
-    if (criteriaContainer) {
-        return criteriaContainer
-    }
-
-    // Если контейнера нет – создаем его
-    const parentContainer = document.querySelector(parentSelector)
-
-    criteriaContainer = document.createElement('div');
-    criteriaContainer.classList.add("message-container__criteria")
-    parentContainer.prepend(criteriaContainer)
-
-    return criteriaContainer
-
-}
-
-function renderCriteria(criteriaResults, container) {
-
-    const emojis = {5: "✅", 4: "⚠️️", 3: "❌"}
-
-    /** Выводит критерии под кнопками */
-
-    container.innerHTML=""
-
-    if (criteriaResults.length === 0) { return }
-
-    const criteriaHeader = document.createElement("h3")
-    criteriaHeader.innerHTML = "Критерии для рубрикатора"
-    container.append(criteriaHeader)
-
-    criteriaResults.forEach((criteria) => {
-
-
-        const elementToPush = document.createElement("div");
-        elementToPush.classList.add("message-container__criteria__item")
-        elementToPush.innerHTML = `${emojis[criteria.value]} ${criteria.name}: ${criteria.value}`
-        if (criteria.note) {}
-
-        container.append(elementToPush)
-    })
-
-}
 
 function renderImprovedReview(AIFeedback, currentFeedback){
+
+    /* Добавляем результат генерации мотивашки от нейронки*/
 
     const AIBlocks = AIFeedback.split("///")
     const AIFeedbackBefore = AIBlocks[0].trim()
 
-    if (AIBlocks[1]) { AIFeedbackAfter = AIBlocks[1].trim()} else { AIFeedbackAfter = ""}
+    let AIFeedbackAfter = AIBlocks[1] ? AIBlocks[1].trim() : "";
 
     saveReviewToEditor(AIFeedbackBefore + "\n" + currentFeedback + "\n" + AIFeedbackAfter)
+
+}
+
+function updateHeight(node) {
+
+    node.style.height = 'auto';
+    node.style.height = node.scrollHeight + 'px';
 
 }

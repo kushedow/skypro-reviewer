@@ -17,7 +17,9 @@
         <div >
             <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="3">{{this.3|trim}}</label>
         </div>
-        <textarea class="checklist__note" name="note__{{this.index}}" placeholder="Напиши замечания тут"></textarea>
+
+        <textarea class="checklist__note" id="checklist__note__{{this.index}}" name="note__{{this.index}}" placeholder="Напиши замечания тут"></textarea>
+
     </div>
 </details>
 {{/each}}

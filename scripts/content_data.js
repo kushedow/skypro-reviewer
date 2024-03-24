@@ -45,7 +45,7 @@ function buildFeedback() {
             if (checklistItem.grade == null) { continue; }
 
             let gradeIcon = emojis[checklistItem.grade]
-            let gradeText = checklistItem[checklistItem.grade].replace("///", "")
+            let gradeText = checklistItem[checklistItem.grade].split("///")[0]
             let reviewPointResult = `${gradeIcon}⠀${gradeText}⠀`
 
             // Добавляем заметки, написанные ментором

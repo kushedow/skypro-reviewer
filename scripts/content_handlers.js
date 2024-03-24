@@ -2,15 +2,15 @@ function registerHandlers() {
 
     // Добавляем DOM документа обработчики нашими событиями после загрузки критериев
 
-    generateButton = document.getElementById("checklist__form__generate")
+    let generateButton = document.getElementById("checklist__form__generate")
     generateButton.addEventListener("click", (e) => {
         buildReview()
     })
 
-    improveButton = document.getElementById("checklist__form__improve")
+    let improveButton = document.getElementById("checklist__form__improve")
     improveButton.addEventListener("click", improveReview)
 
-    markButtons = document.querySelectorAll(".mark-area input")
+    let markButtons = document.querySelectorAll(".mark-area input")
     markButtons.forEach(el => {
 
         el.addEventListener('click', (e) => {
@@ -49,5 +49,4 @@ function registerHandlers() {
             updateHeight(node)
         })
     })
-
 }

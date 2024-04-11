@@ -16,7 +16,7 @@ function saveReviewToEditor(content) {
 
 function retrieveFormData() {
 
-    /* Загружает данные из формы в глобальные объект чеклиста  */
+    /* Загружает данные из формы в глобальный объект чеклиста  */
 
     // Сначала получаем ссылку на форму по её идентификатору
     const form = document.getElementById('checklist__form');
@@ -148,5 +148,14 @@ function updateHeight(node) {
 
     node.style.height = 'auto';
     node.style.height = node.scrollHeight + 'px';
+
+}
+
+function expandReview() {
+
+    const details =  document.querySelectorAll("#checklist__form details")
+    details.forEach(element => {
+        element.setAttribute("open", "true");
+    })
 
 }

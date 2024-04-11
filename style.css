@@ -20,8 +20,6 @@
     transition-duration: 400ms;
 }
 
-
-
 .review-assistant .checklist__grade--5 summary::before {
     background-color: #6FCF97;
 }
@@ -54,6 +52,10 @@
     margin-right: 8px;
     margin-left: 16px;
     transform: scale(1.3);
+}
+
+.review-assistant #checklist__expand-all {
+    cursor: pointer;
 }
 
 

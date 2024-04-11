@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Skypro Reviewer",
-  "version": "0.11",
+  "version": "0.12",
   "description": "Check homework faster, create reviews better!",
   "action": {
     "default_popup": "popup.html",
@@ -11,12 +11,13 @@
       "128": "images/icon128.png"
     }
   },
+  "background": {"service_worker":  "background.js"},
   "options_page": "options.html",
-  "permissions": ["activeTab", "sessions", "debugger", "storage"],
+  "permissions": ["activeTab", "sessions", "debugger", "storage", "tabs", "scripting"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
-  "host_permissions": ["*://*.docs.google.com/*"],
+  "host_permissions": ["*://*.skypro-reviewer.onrender.com/*"],
 
   "content_scripts": [
     {
@@ -27,6 +28,7 @@
         "scripts/content_data.js",
         "scripts/content_handlers.js",
         "scripts/content_api.js",
+        "scripts/content_ai.js",
         "content.js"
       ],
       "css": ["style.css"]

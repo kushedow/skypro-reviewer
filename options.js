@@ -1,38 +1,79 @@
-promptDefault = "Представь что ты преподаватель программирования на Python и проверяешь работу студента. Между словами \"Начало\" и \"Конец\" приведен результат проверки ученика по чеклисту. Тебе нужно написать дружелюбную, профессиональную обратную связь, состоящую из 2 частей. 2 части рецензии должны быть разделены знаком ///\n" +
-    "\n" +
-    "ИНСТРУКЦИЯ К ЧАСТИ 1\n" +
-    "\n" +
-    "Начни с приветствия. Затем пропусти строчку. Во время написания обратной связи, обращайся к студенту только на \"ты\". Обратная связь должна содержать 3 предложения.\n" +
-    "\n" +
-    "Если в тексте все пункты отмечены значком \"✅\" выбери только одну случайную похвалу из списка: (работа идеальная , Работа хорошая , ты - молодец, работа выполнена профессионально, я проверил работу с удовольствием, замечаний нет )\n" +
-    "\n" +
-    "Если в тексте есть значки \"✴️\", назови работу достаточно хорошей и скажи, что, хотя решение в целом выполнено верно, ты можешь предложить варианты, как его можно улучшить. Выбери одну из следующих поддерживающих фраз\n" +
-    "\n" +
-    "ИНСТРУКЦИЯ К ЧАСТИ 2\n" +
-    "\n" +
-    "Если в тексте нет значков \"❌\", напиши, но есть  \"работу принимаю\" и выбери только одну случайную похвалы из списка: (Поздравляю с выполнением задания, Приятно проверять такие работы, У меня даже правок нет, Большое спасибо за качественную работу, Удачи со следующими уроками)\n" +
-    "\n" +
-    "Если в тексте встречаются только значки \"✴️\" и \"✅\", то напиши: \"работа хорошая не смотря на мелкие недоработки, поздравляю с выполнением задания\" ⠀\n" +
-    "\n" +
-    "Если в тексте присутствует 1 или 2 значка ❌, назови работу хорошей и скажи, что нужно исправить совсем немного недочетов и сдать работу снова и ты сразу ее примешь.\n" +
-    "\n" +
-    "Если в тексте несколько значков \"❌\", поблагодари за выполненную работу скажи \"к сожалению я не могу принять работу\", скажи, что нужно приложить еще немного усилий, чтобы выполнить задание, что ждешь новую версию и всегда будешь рад ответить на вопросы или помочь со сложностями."
+SERVERURL = "https://skypro-reviewer.onrender.com"
+
+async function loadAllPrompts(){
+    /* Загружаем с сервера все промпты */
+    const url = new URL(SERVERURL+"/prompts")
+    let result = []
+
+    try {
+        const response = await fetch(url, {});
+        result = await response.json();
+
+        if (response.status !== 200) {
+            console.log("Не удалось загрузить промпты. Обратитесь к разработчику")
+            console.log(result)
+            return null
+        }
+
+    } catch (error) {
+        console.log("Не удалось загрузить промпты. Обратитесь к разработчику")
+        return null
+    }
+
+    return result
+
+}
+
+function renderPromptsDropdown(options, currentValue){
+    /* Показываем выпадашку с доступными промптами на стрнице настроек */
+    const selectNode = document.getElementById('options__prompt__name');
+    selectNode.innerHTML = "";
+    if (selectNode) {
+        options.forEach(function (optionText) {
+            const option = document.createElement("option");
+            option.value = optionText; // Устанавливаем значение option
+            option.textContent = optionText; // Устанавливаем текст содержимого option
+            if (optionText === currentValue) {option.setAttribute("selected","selected" )}
+            selectNode.appendChild(option); // Добавляем option в select
+        });
+    } else {
+        console.error("Элемент #promptSelectNode не найден в дом-дереве.");
+    }
+
+}
+
+function retreiveOptionsFromForm(){
+    /* Получает введенные значения из формы */
+    const form = document.getElementById('checklist__options');
+    // Возвращаем нужное поле из формы
+    return new FormData(form).get("options__prompt__name")
+}
 
 function saveOptions() {
-    var promptValue = document.getElementById('options__prompt').value;
-    chrome.storage.sync.set({promptValue: promptValue}, function() {
-        console.log('Options saved! ');
+    /* Сохраняем настройки при нажатии на "Сохранить" */
+    var promptName = retreiveOptionsFromForm()
+    chrome.storage.sync.set({promptName: promptName}, function() {
+        console.log(`Options saved! ${promptName}`);
     });
+
 }
 
-// Загрузка сохраненных настроек
 function restoreOptions() {
-    chrome.storage.sync.get('promptValue', function(items) {
-        document.getElementById('options__prompt').value = items.promptValue || promptDefault;
+    /* Загрузка сохраненных настроек */
+    chrome.storage.sync.get('promptName', function(items) {
+        promptName = items.promptName
+        document.getElementById('options__prompt__name').value = promptName;
+        console.log(`Options restored! ${promptName}`)
     });
-    console.log("Options restored!")
 }
 
-document.addEventListener('DOMContentLoaded', restoreOptions);
+/* Активируем кнопку сохранения настроек */
 document.getElementById('options__save').addEventListener('click', saveOptions);
+
+/* Загружаем названия доступных промптов при открытии страницы настроек */
+loadAllPrompts().then( allPrompts => {
+    renderPromptsDropdown(allPrompts)
+    restoreOptions()
+
+})
 

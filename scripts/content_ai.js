@@ -5,12 +5,12 @@ async function improveReview() {
     const currentFeedback = getCurrentEditorValue()
 
     // Показываем случайный текст ожидания загрузки
-    saveReviewToEditor(getRandomLoaderText())
+    showAlertBox(getRandomLoaderText(),"info")
 
     // Получаем мотивашку от нейронки
     const result = await fetchAIByConfiguredPromptName(currentFeedback)
 
-    // Показываем сгенерированный
+    // Показываем сгенерированный текст
     renderImprovedReview(result, currentFeedback)
 
 }

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Skypro Reviewer",
-  "version": "0.12",
+  "version": "0.13",
   "description": "Check homework faster, create reviews better!",
   "action": {
     "default_popup": "popup.html",
@@ -11,8 +11,10 @@
       "128": "images/icon128.png"
     }
   },
-  "background": {"service_worker":  "background.js"},
   "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html"
+  },
   "permissions": ["activeTab", "sessions", "debugger", "storage", "tabs", "scripting"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
@@ -45,5 +47,12 @@
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@sky.pro"
+    }
   }
+
 }

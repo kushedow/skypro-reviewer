@@ -17,16 +17,17 @@ async function loadChecklistFromServer(sheet_id=null) {
      */
 
     let result = {};
-
     const url = new URL(SERVERURL+"/checklist")
 
-    const fetchData = {
-        ...getTicketData(),
-        sheet_id: sheet_id
-    }
+    /* Если указан id документа – отправляем запрос  с ним, если нет – без него */
 
-    console.log("Запрашиваем чеклист с сервера")
-    console.log(fetchData)
+    const fetchData = sheet_id ? { ...getTicketData(), sheet_id } : { ...getTicketData() };
+
+    if (sheet_id) {
+        showAlertBox("Загружаем критерии по id чеклиста", "info")
+    } else {
+        showAlertBox("Загружаем критерии по названию задания", "info")
+    }
 
     try {
 
@@ -36,22 +37,27 @@ async function loadChecklistFromServer(sheet_id=null) {
             body: JSON.stringify(fetchData)
         });
 
-        if (response.status !== 200) {
-            console.log("Не удалось загрузить критерии. Обратитесь к разработчику")
+        if (response.status === 400) {
+            showAlertBox("Не удалось загрузить критерии. Обратитесь к разработчику", "warning")
+            console.log("Не удалось загрузить критерии.")
             console.log(await response.json())
+            return null
+        }
+
+        else if (response.status === 404) {
+            showAlertBox("Для этого задания еще нет чеклиста.", "warning")
             return null
         }
 
         result = await response.json(); // читать тело ответа в формате JSON
 
     } catch (error) {
-        console.log("Ошибка при загрузке критериев. Обратитесь к разработчику")
+        showAlertBox("Не удалось загрузить критерии. Обратитесь к разработчику", "warning")
+        console.log("Не удалось загрузить критерии. Обратитесь к разработчику")
         return null
     }
 
-     const indexedChecklist = _convertListToIndexedObject(result)
-
-     return indexedChecklist
+    return _convertListToIndexedObject(result)
 
 }
 
@@ -85,7 +91,7 @@ async function reportChecklistToServer(event) {
         if (response.ok) { // Если статус код в диапазоне 200-299
             // Попытка прочитать и вывести тело ответа как JSON
             const jsonData = await response.json();
-            console.log("Отчет принят сервером, полученф данные:", jsonData);
+            console.log("Отчет принят сервером, получены данные:", jsonData);
         } else {
             // Вывод ошибки, если статус код !=200
             console.error("Ошибка:", response.status);

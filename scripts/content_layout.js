@@ -13,6 +13,24 @@ function saveReviewToEditor(content) {
     editorElement.innerHTML = content
 }
 
+function showAlertBox(message="", status="info"){
+
+    const container = getReviewContainer()
+
+    let alertBox = container.querySelector(".review-assistant__alert")
+
+    if (!alertBox) {
+        alertBox = document.createElement("div")
+        container.append(alertBox)
+    }
+
+    alertBox.innerHTML = message
+    alertBox.className = "";
+    alertBox.classList.add("review-assistant__alert")
+    alertBox.classList.add("review-assistant__alert--"+status)
+
+}
+
 
 function retrieveFormData() {
 
@@ -45,7 +63,13 @@ function highlightCheckboxGroup(GroupIndex, grade) {
 function getRandomLoaderText() {
 
     /* Случайное сообщение во время ожидания */
-    const preloaders = ['Подождите несколько секунд, ставим свечку за здоровье техлида...', 'Роемся в пачке с гугл-таблицами, еще несколько секунд...', 'Ожидайте ... удаляем цитаты про волка...', 'Подождите, получаем альтушку на госуслугах...', 'Пару секунд ... Обучаем нейронку на цитатах Харитона...'];
+    const preloaders = [
+        'Подождите несколько секунд, ставим свечку за здоровье техлида...',
+        'Роемся в пачке с гугл-таблицами, еще несколько секунд...',
+        'Ожидайте ... удаляем цитаты про волка...',
+        'Подождите, получаем альтушку на госуслугах...',
+        'Пару секунд ... Обучаем нейронку на цитатах Харитона...'
+    ];
     const index = Math.floor(Math.random() * preloaders.length);
     return preloaders[index];
 }
@@ -69,7 +93,7 @@ function getReviewContainer(querySelector = ".review-assistant") {
 
     //  Добавляем заголовок к контейнеру
     const reviewHeader = document.createElement('h3');
-    reviewHeader.innerHTML = "Критерии загружаются ..."
+    reviewHeader.innerHTML = "<div class='review-assistant__alert review-assistant__alert--info'>Критерии загружаются ... </div>"
     reviewContainer.append(reviewHeader)
 
     return reviewContainer
@@ -92,13 +116,18 @@ function getTicketData(){
     const mentorFullName = dataNodes[2].innerHTML.trim()
     // Ссылку на критерииы
     const criteriaNode = document.querySelector('a[href^="https://docs.google.com/spreadsheets"]');
-
     let criteriaURL = criteriaNode ? criteriaNode.attributes.getNamedItem("href").value : "";
+
+    // ID ученика
+    const PageViewNode = document.querySelector("app-ticket-page-view")
+    const studentID = parseInt(PageViewNode.getAttribute("data-studentid"))
+
 
     return {
         ticket_id: window.location.pathname.split("/").pop(),
         student_full_name: studentFullName,
         student_first_name: studentFirstName,
+        student_id: studentID,
         task_name: taskName,
         stream_name: streamName,
         mentor_full_name: mentorFullName,

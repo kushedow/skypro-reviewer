@@ -36,9 +36,7 @@ function retrieveFormData() {
 
     /* Загружает данные из формы в глобальный объект чеклиста  */
 
-    // Сначала получаем ссылку на форму по её идентификатору
     const form = document.getElementById('checklist__form');
-    // Затем создаём новый экземпляр объекта FormData, передавая ему нашу форму
     const formData = new FormData(form);
 
     for (const checklistItem of Object.values(checklist)) {

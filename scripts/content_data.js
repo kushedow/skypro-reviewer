@@ -34,7 +34,7 @@ function buildFeedback() {
 
     for (const oneGroup of checklistGroups) {
         if ((oneGroup.name !== undefined) && (oneGroup.items.length !== 0)) {
-            feedbackText += `\n<b>${oneGroup.name}: </b>\n`
+            feedbackText += `\n<b>${oneGroup.name}: </b>`
         } else {
             feedbackText += `\n`
         }
@@ -49,7 +49,7 @@ function buildFeedback() {
             let reviewPointResult = `${gradeIcon}⠀${gradeText}⠀`
 
             // Добавляем заметки, написанные ментором
-            if (checklistItem) {
+            if (checklistItem.note) {
                 reviewPointResult += `\n${checklistItem.note}`
             }
 
@@ -58,7 +58,7 @@ function buildFeedback() {
         }
     }
 
-    return feedbackText
+    return feedbackText.replace("\n\n", "\n")
 
 }
 

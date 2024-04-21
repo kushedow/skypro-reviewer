@@ -13,21 +13,11 @@ body {font-family: sans-serif, Arial; }
     font-size: 18px;
 }
 
-.review-alert--success {
-    background-color: #ddeac3;
-}
-
-.review-alert--warning {
-    background-color: #f8d7da;
-}
-
-.review-alert--info {
-    background-color: #DEDFFB;
-}
-
+.review-alert--success {background-color: #ddeac3;}
+.review-alert--warning {background-color: #f8d7da;}
+.review-alert--info {background-color: #DEDFFB;}
 
 .review-popup button,  .review-popup .button{
-
     padding: 6px 6px;
     border: none;
     background-color: rgb(86, 94, 239);
@@ -36,26 +26,23 @@ body {font-family: sans-serif, Arial; }
     cursor: pointer;
     font-size: 15px;
     text-decoration: none;
-
 }
 
-.review-popup hr {
-    margin:16px 0;
-}
+.review-popup hr {margin:16px 0;}
 
-.review-popup .link {
-    color: #999;
-    font-size: 15px;
-}
+.review-popup .link { color: #999; font-size: 15px; }
 
 .form-control {
-
     padding: 6px 6px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 15px;
     border:none;
     min-width: 400px;
-
 }
 
+details summary {
+    font-size: 16px;
+    margin-top: 16px;
+    cursor: pointer;
+}

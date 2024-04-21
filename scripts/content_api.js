@@ -1,6 +1,5 @@
 SERVERURL = "https://skypro-reviewer.onrender.com"
 
-
 function _convertListToIndexedObject(raw_checklist) {
     const indexedChecklist = raw_checklist.reduce((acc, item, index) => {
         acc[index] = {index, ...item};
@@ -8,6 +7,8 @@ function _convertListToIndexedObject(raw_checklist) {
     }, {});
     return indexedChecklist
 }
+
+
 
 async function loadChecklistFromServer(sheet_id=null) {
 

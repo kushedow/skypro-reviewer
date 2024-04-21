@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         return
     }
 
+    checkVersion()
     callAutodetectFunction()
 
 

@@ -3,6 +3,9 @@
 
 <form  id="checklist__form">
 {{#each items}}
+    {{#if this.show_group}}
+         <strong>{{this.group}}</strong>
+    {{/if}}
 <details id="checklist__details__{{this.index}}">
     <summary>{{this.title}}</summary>
     <div class="checklist-options" id="checklist__options__{{this.index}}" data-index="{{this.index}}">

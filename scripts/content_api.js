@@ -1,13 +1,14 @@
 SERVERURL = "https://skypro-reviewer.onrender.com"
 
 function _convertListToIndexedObject(raw_checklist) {
-    const indexedChecklist = raw_checklist.reduce((acc, item, index) => {
-        acc[index] = {index, ...item};
+    let previous = null;
+    return raw_checklist.reduce((acc, item, index) => {
+        const show_group = previous === null || previous.group !== item.group;
+        acc[index] = {index, ...item, show_group};
+        previous = item;
         return acc;
     }, {});
-    return indexedChecklist
 }
-
 
 
 async function loadChecklistFromServer(sheet_id=null) {
@@ -18,11 +19,13 @@ async function loadChecklistFromServer(sheet_id=null) {
      */
 
     let result = {};
+    const ticketData = getTicketData()
     const url = new URL(SERVERURL+"/checklist")
+    console.log(ticketData)
 
     /* Если указан id документа – отправляем запрос  с ним, если нет – без него */
 
-    const fetchData = sheet_id ? { ...getTicketData(), sheet_id } : { ...getTicketData() };
+    const fetchData = sheet_id ? { ...ticketData, sheet_id } : { ...getTicketData() };
 
     if (sheet_id) {
         showAlertBox("Загружаем критерии по id чеклиста", "info")

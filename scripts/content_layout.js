@@ -120,6 +120,10 @@ function getTicketData(){
     const PageViewNode = document.querySelector("app-ticket-page-view")
     const studentID = parseInt(PageViewNode.getAttribute("data-studentid"))
 
+    // Решение ученика
+    const studentSolutionNode = document.querySelector(".checking-hw .messages .message .content .message-body .ql-editor")
+    const studentSolution = studentSolutionNode ? studentSolutionNode.innerHTML : ""
+
 
     return {
         ticket_id: window.location.pathname.split("/").pop(),
@@ -129,7 +133,8 @@ function getTicketData(){
         task_name: taskName,
         stream_name: streamName,
         mentor_full_name: mentorFullName,
-        criteria_url: criteriaURL
+        criteria_url: criteriaURL,
+        student_solution: studentSolution
     }
 }
 

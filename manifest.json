@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Skypro Reviewer",
-  "version": "0.14",
+  "version": "0.15",
   "description": "Check homework faster, create reviews better!",
   "action": {
     "default_popup": "popup.html",
@@ -25,21 +25,25 @@
     {
       "matches": ["*://*.student-care.sky.pro/ticket/*"],
       "js": [
-        "scripts/render_template.js",
+        "scripts/utils/render_template.js",
         "scripts/content_layout.js",
         "scripts/content_data.js",
         "scripts/content_handlers.js",
-        "scripts/content_api.js",
+        "scripts/api/content_api.js",
+
+        "scripts/softbox/softbox.js",
+        "scripts/skills/skills.js",
+
         "scripts/content_ai.js",
-        "content.js"
+        "scripts/content.js"
       ],
-      "css": ["style.css"]
+      "css": ["styles/content.css", "styles/softbox.css"]
     }
   ],
 
   "web_accessible_resources": [
     {
-      "resources": ["templates/checklist.html"],
+      "resources": ["templates/checklist.html", "templates/softbox.html", "templates/failedskills.html"],
       "matches": ["<all_urls>"]
     }
   ],

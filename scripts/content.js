@@ -6,6 +6,8 @@ chrome.runtime.onMessage.addListener(
 
         if (request.message === "show_checklist") {
 
+            showSoftBox()
+
             // вытаскиваем из переданного события адрес чеклиста
             getReviewContainer(".review-assistant")
 
@@ -30,19 +32,20 @@ chrome.runtime.onMessage.addListener(
 
         else if (request.message ==="autoload_checklist"){
 
+            showSoftBox()
+
             // вытаскиваем из переданного события адрес чеклиста
             getReviewContainer(".review-assistant")
 
             // загружаем с сервера чеклист
             const checklistObject = await loadChecklistFromServer()
 
-            // записываем в глобальную переменную чеклист
-            checklist = checklistObject
-            console.log(checklist)
-
-            // отображаем чеклист в DOM
-            await feedbackRender.renderChecklist(checklistObject)
-            registerHandlers()
+            if (checklistObject) {
+                checklist = checklistObject
+                // отображаем чеклист в DOM
+                await feedbackRender.renderChecklist(checklistObject)
+                registerHandlers()
+            }
 
             sendResponse({result: true});
 

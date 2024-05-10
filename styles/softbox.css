@@ -1,0 +1,73 @@
+.softbox {
+    margin-top: 24px;
+    margin-left: 48px;
+    max-width: 400px;
+}
+
+.softbox__point {
+
+    display: grid;
+    grid-template-columns: 1fr 100px; /* Левая колонка занимает всё доступное пространство, правая - 200px */
+
+}
+
+.softbox__gradebox {
+    font-size: 0;
+}
+
+.softbox-radio {
+    padding: 5px 7px 5px 7px;
+    display: inline-block;
+    line-height: 0;
+}
+
+.softbox-radio input {
+    margin: 0;
+}
+
+.softbox-radio--red {
+    background-color: #FF6534;
+    border-radius: 4px 0 0 4px;
+}
+
+.softbox-radio--yellow {
+    background-color: #FFCF4D;
+}
+
+.softbox-radio--green {
+    background-color: #6FCF97;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Стилизация контейнера подсказки */
+.softbox__tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* Если нужен индикатор подсказки */
+    cursor: pointer;
+    color: #555;
+}
+
+/* Стилизация текста подсказки */
+.softbox__tooltip .softbox__tooltip__text {
+    visibility: hidden;
+    width: 220px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 12px;
+    padding: 5px 0;
+
+    /* Позиционирование */
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -110px; /* Чтобы центрировать подсказку */
+}
+
+/* Показ подсказки при наведении */
+.softbox__tooltip:hover .softbox__tooltip__text {
+    visibility: visible;
+}

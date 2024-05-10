@@ -47,4 +47,19 @@ function renderTemplate(template, data) {
     return template;
 }
 
+
+async function renderFromTemplate(selector, templateName, data) {
+
+    try {
+        const response = await fetch(chrome.runtime.getURL(`templates/${templateName}.html`))
+        const templateCode = await response.text()
+        const renderedCode = render(templateCode, data)
+        const nodeToUpdate = document.querySelector(selector)
+        nodeToUpdate.innerHTML = renderedCode
+    } catch {
+        console.log(`Не удалось отрендерить шаблон ${templateName} в элемент ${selector}`)
+    }
+
+}
+
 window.render = renderTemplate

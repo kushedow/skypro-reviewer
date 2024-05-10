@@ -6,6 +6,19 @@ function getCurrentEditorValue() {
 
 }
 
+function markWholeGroup(event) {
+
+    const node = event.target
+    const group = node.getAttribute("data-group")
+    console.log(group)
+    all_group_radioinputs = document.querySelectorAll(`.review-assistant input[data-group=\"${group}\"]`)
+    all_group_radioinputs.forEach(element => {
+        element.click()
+        element.checked = true
+    })
+
+}
+
 function saveReviewToEditor(content) {
 
     /* Записывает текст в контейнер */
@@ -32,6 +45,7 @@ function showAlertBox(message="", status="info"){
 }
 
 
+
 function retrieveFormData() {
 
     /* Загружает данные из формы в глобальный объект чеклиста  */
@@ -40,14 +54,16 @@ function retrieveFormData() {
     const formData = new FormData(form);
 
     for (const checklistItem of Object.values(checklist)) {
-
         const radio_name = "checklist__" + checklistItem.index
         checklist[checklistItem.index].grade = formData.get(radio_name)
-
         const note_name = "note__" + checklistItem.index
         checklist[checklistItem.index].note = formData.get(note_name)
     }
 }
+
+
+
+
 
 function highlightCheckboxGroup(GroupIndex, grade) {
 

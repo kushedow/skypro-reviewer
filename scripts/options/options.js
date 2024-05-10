@@ -26,7 +26,7 @@ async function loadAllPrompts(){
 
 function renderPromptsDropdown(options, currentValue){
     /* Показываем выпадашку с доступными промптами на стрнице настроек */
-    const selectNode = document.getElementById('options__prompt__name');
+    const selectNode = document.getElementById('promptName');
     selectNode.innerHTML = "";
     if (selectNode) {
         options.forEach(function (optionText) {
@@ -43,28 +43,49 @@ function renderPromptsDropdown(options, currentValue){
 }
 
 function retreiveOptionsFromForm(){
+
     /* Получает введенные значения из формы */
+
     const form = document.getElementById('checklist__options');
-    // Возвращаем нужное поле из формы
-    return new FormData(form).get("options__prompt__name")
+    const formData = new FormData(form);
+    let options = {}
+    for (let [key, value] of formData.entries()) { options[key]= value }
+    return options
+
 }
 
 function saveOptions() {
+
     /* Сохраняем настройки при нажатии на "Сохранить" */
-    var promptName = retreiveOptionsFromForm()
-    chrome.storage.sync.set({promptName: promptName}, function() {
-        console.log(`Options saved! ${promptName}`);
+    const options = retreiveOptionsFromForm();
+
+    chrome.storage.sync.set(options, function() {
+        console.log("Options saved!", options);
     });
 
 }
 
 function restoreOptions() {
+
     /* Загрузка сохраненных настроек */
+
     chrome.storage.sync.get('promptName', function(items) {
         promptName = items.promptName
-        document.getElementById('options__prompt__name').value = promptName;
-        console.log(`Options restored! ${promptName}`)
+        document.getElementById('promptName').value = promptName;
     });
+
+    chrome.storage.sync.get('softboxOn', function(items) {
+        softboxOn = items.softboxOn
+        document.getElementById('softboxOn').value = softboxOn;
+    });
+
+    chrome.storage.sync.get('skillsOn', function(items) {
+        skillsOn = items.skillsOn
+        document.getElementById('skillsOn').value = skillsOn;
+    });
+
+
+
 }
 
 /* Активируем кнопку сохранения настроек */

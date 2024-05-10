@@ -1,33 +1,19 @@
 function registerHandlers() {
 
-    /* Кнопочка генерации ревью по проставленным галочкам */
-
-    let generateButton = document.getElementById("checklist__form__generate")
-    generateButton.addEventListener("click", (e) => {
-        buildReview()
-    })
-
-    /* Кнопочка улучшить с помощью ИИ*/
-
-    let improveButton = document.getElementById("checklist__form__improve")
-    improveButton.addEventListener("click", improveReview)
-
-    /* Кнопочка развернуть все критерии */
-
-    let expandButton = document.getElementById("checklist__expand-all")
-    expandButton.addEventListener("click", expandReview)
-
     /* Отправляем критерии на сервер при выставлении оценки*/
 
     let markButtons = document.querySelectorAll(".mark-area input")
     markButtons.forEach(el => {
 
         el.addEventListener('click', (e) => {
+            // Отправляем данные по чеклисту
             reportChecklistToServer()
+            // Отправляем данные по софтам
+            reportSoftSkillsToServer()
         })
     });
 
-    /*  Добавляем раскрашивание и показыание поля с заметкой после простановки радиокнопки */
+    /*  Добавляем раскрашивание и показывание поля с заметкой после простановки радиокнопки */
 
     const radios =  document.querySelectorAll("#checklist__form .checklist-options input")
     radios.forEach(el => {
@@ -54,10 +40,31 @@ function registerHandlers() {
     /* Растягиваем поле ввода при его изменении */
 
     const textareas = document.querySelectorAll(".checklist__note")
-    console.log(textareas)
     textareas.forEach(node => {
         node.addEventListener("input", (e) => {
             updateHeight(node)
         })
     })
+
+
+    // Находим все элементы содержащие атрибут @click
+
+    const clickableElements = document.querySelectorAll('[\\@click]');
+
+    clickableElements.forEach(elem => {
+
+        const functionName = elem.getAttribute('@click');
+
+        if (typeof window[functionName] === 'function') {
+
+            // Добавляем обработчик событий клика, который вызывает функцию
+            elem.addEventListener('click', function(event) {
+                window[functionName](event); // Передаем событие в вызываемую функцию
+            });
+
+        } else {
+            console.warn(`Функция ${functionName} не определена.`);
+        }
+    });
+
 }

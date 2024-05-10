@@ -114,3 +114,23 @@ async function reportChecklistToServer(event) {
 
 }
 
+async function reportSoftSkillsToServer(){
+
+    const reportData = {
+        ...getTicketData(),
+        skills: retrieveSoftboxData()
+    }
+
+    const url = new URL(SERVERURL+"/report-soft-skills")
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {'Content-Type': 'application/json;charset=utf-8'},
+        body: JSON.stringify(reportData)
+    });
+
+
+}
+
+
+

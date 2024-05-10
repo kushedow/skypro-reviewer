@@ -1,0 +1,31 @@
+<h3>Оцените софт-скиллы ученика</h3>
+<form id="softbox__form">
+
+{{#each skills}}
+    <div class="softbox__point">
+        <span>
+            {{this.title}}
+            <div class="softbox__tooltip">
+                &quest; <span class="softbox__tooltip__text">{{this.hint}}</span>
+            </div>
+        </span>
+
+        <span class="softbox__gradebox">
+        
+            <label class="softbox-radio softbox-radio--red">
+               <input type="radio" name="{{this.key}}" value="0">
+            </label>
+
+            <label class="softbox-radio softbox-radio--yellow">
+               <input type="radio" name="{{this.key}}" value="1" checked>
+            </label>
+
+            <label class="softbox-radio softbox-radio--green">
+                <input type="radio" name="{{this.key}}" value="2">
+            </label>
+
+        </span>
+    </div>
+{{/each}}
+
+</form>

@@ -1,38 +1,60 @@
 <h3>Критерии проверки</h3>
-<span id="checklist__expand-all">Развернуть все</span>
+
+<button class="review-assistant__button--small" @click="expandReview">Развернуть все</button>
 
 <form  id="checklist__form">
 {{#each items}}
+
     {{#if this.show_group}}
-         <strong>{{this.group}}</strong>
+         <h4>
+             <strong>{{this.group}}</strong>
+             <button type="button" @click="markWholeGroup" data-group="{{this.group}}" class="review-assistant__button--small">все верно</button>
+         </h4>
     {{/if}}
-<details id="checklist__details__{{this.index}}">
-    <summary>{{this.title}}</summary>
-    <div class="checklist-options" id="checklist__options__{{this.index}}" data-index="{{this.index}}">
-        {{#if this.hint}} <div><small><b>{{this.hint}}</b></small></div>{{/if}}
-        <div >
-            <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="5">{{this.5|trim}}</label>
-        </div>
-        {{#if this.4}}
-        <div >
-            <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="4">{{this.4|trim}}</label>
-        </div>
-        {{/if}}
-        <div >
-            <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="3">{{this.3|trim}}</label>
+
+    <details id="checklist__details__{{this.index}}">
+
+        <summary>{{this.title}}</summary>
+
+        <div class="checklist-options" id="checklist__options__{{this.index}}" data-index="{{this.index}}" data-group="{{this.group}}">
+            {{#if this.hint}} <div><small><b>{{this.hint}}</b></small></div>{{/if}}
+            <div>
+                <label>
+                    <input type="radio"
+                           name="checklist__{{this.index}}"
+                           data-index="{{this.index}}"
+                           data-group="{{this.group}}"
+                           value="5">
+                    {{this.5|trim}}
+                </label>
+            </div>
+            {{#if this.4}}
+            <div >
+                <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="4">{{this.4|trim}}</label>
+            </div>
+            {{/if}}
+            <div >
+                <label> <input type="radio" name="checklist__{{this.index}}" data-index="{{this.index}}" value="3">{{this.3|trim}}</label>
+            </div>
+
+            <textarea class="checklist__note" id="checklist__note__{{this.index}}" name="note__{{this.index}}" placeholder="Напиши замечания тут"></textarea>
+
         </div>
 
-        <textarea class="checklist__note" id="checklist__note__{{this.index}}" name="note__{{this.index}}" placeholder="Напиши замечания тут"></textarea>
+    </details>
 
-    </div>
-</details>
 {{/each}}
+
 <div class="checklist__form__controls">
-    <button type="button" id="checklist__form__generate">
+
+    <button type="button" id="checklist__form__generate" @click="buildReview">
         Сгенерировать обратную связь
     </button>
-    <button type="button" id="checklist__form__improve">
+
+    <button type="button" id="checklist__form__improve" @click="improveReview">
         Улучшить мотивацию с помощью AI
     </button>
 
 </div>
+
+<div class="review__skillbox"></div>

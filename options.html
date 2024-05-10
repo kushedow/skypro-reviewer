@@ -10,14 +10,31 @@
 </head>
 <body>
 <h1>Настройки ревьюера</h1>
-<p>Промт для генерации рецензии</p>
+
 
 <form id="checklist__options">
-  <select id="options__prompt__name" name="options__prompt__name"></select>
-  <p><button id="options__save" type="button">Сохранить промпт</button></p>
+
+  <p>Промт для генерации рецензии</p>
+  <select id="promptName" name="promptName"></select>
+
+  <p>Оценка софтов включена</p>
+  <select name="softboxOn" id="softboxOn">
+    <option value="false">Нет</option>
+    <option value="true">Да</option>
+  </select>
+
+  <p>Работа с навыками</p>
+  <select name="skillsOn" id="skillsOn">
+    <option value="false">Нет</option>
+    <option value="true">Да</option>
+  </select>
+
+  <p><button id="options__save" type="button">Сохранить настройки</button></p>
+
 </form>
 
-<script src="scripts/options.js"></script>
+
+<script src="scripts/options/options.js"></script>
 
 </body>
 </html>

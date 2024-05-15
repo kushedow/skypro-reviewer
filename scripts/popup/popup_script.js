@@ -12,7 +12,7 @@ async function callContentAction(message, data, callback) {
 async function isItTaskPage() {
     /* Проверяем подходит ли наша страничка для генерации критерия */
     return new Promise((resolve, reject) => {
-        chrome.tabs.query({active: true}, tabs => {
+        chrome.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
             const currentURL = tabs[0].url;
             resolve(currentURL.startsWith("https://student-care.sky.pro/ticket"));
         });

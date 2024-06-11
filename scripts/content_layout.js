@@ -62,9 +62,6 @@ function retrieveFormData() {
 }
 
 
-
-
-
 function highlightCheckboxGroup(GroupIndex, grade) {
 
     /* Подсвечивает кружочек у критерия после простановки оценки */
@@ -140,8 +137,6 @@ function getTicketData(){
     const studentSolutionNode = document.querySelector(".checking-hw .messages .message .content .message-body .ql-editor")
     const studentSolution = studentSolutionNode ? studentSolutionNode.innerHTML : ""
 
-
-
     return {
         ticket_id: window.location.pathname.split("/").pop(),
         student_full_name: studentFullName,
@@ -155,7 +150,6 @@ function getTicketData(){
         student_solution: studentSolution,
     }
 }
-
 
 feedbackRender = {
 
@@ -187,7 +181,6 @@ function renderImprovedReview(AIFeedback, currentFeedback){
 
     const AIBlocks = AIFeedback.split("///")
     const AIFeedbackBefore = AIBlocks[0].trim()
-
     let AIFeedbackAfter = AIBlocks[1] ? AIBlocks[1].trim() : "";
 
     saveReviewToEditor(AIFeedbackBefore + "\n" + currentFeedback + "\n" + AIFeedbackAfter)

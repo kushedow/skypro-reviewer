@@ -3,7 +3,7 @@ function renderTemplate(template, data) {
     function handleEach(match, variablePath, insideLoop) {
         const items = get(data, variablePath.trim(), []);
         return items.map(item =>
-            renderTemplate(insideLoop, {this:item})
+            renderTemplate(insideLoop, {...data, this:item})
         ).join('');
     }
 

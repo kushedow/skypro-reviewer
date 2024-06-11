@@ -21,7 +21,6 @@ async function loadChecklistFromServer(sheet_id=null) {
     let result = {};
     const ticketData = getTicketData()
     const url = new URL(SERVERURL+"/checklist")
-    console.log(ticketData)
 
     /* Если указан id документа – отправляем запрос  с ним, если нет – без него */
 

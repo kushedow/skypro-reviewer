@@ -6,7 +6,7 @@ chrome.runtime.onMessage.addListener(
 
         if (request.message === "show_checklist") {
 
-            showSoftBox()
+            // showSoftBox()
 
             // вытаскиваем из переданного события адрес чеклиста
             getReviewContainer(".review-assistant")
@@ -32,7 +32,7 @@ chrome.runtime.onMessage.addListener(
 
         else if (request.message ==="autoload_checklist"){
 
-            showSoftBox()
+            // showSoftBox()
 
             // вытаскиваем из переданного события адрес чеклиста
             getReviewContainer(".review-assistant")
@@ -55,13 +55,11 @@ chrome.runtime.onMessage.addListener(
         else if (request.message ==="detect_task_name"){
             const ticketData = getTicketData()
             sendResponse({result: ticketData});
-
         }
 
         return true
 
     });
-
 
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {

@@ -58,10 +58,12 @@ function getSkillByChecklist() {
     Object.keys(checklist).forEach(key => {
 
         const entry = checklist[key];
-        const skill_name = entry.skill_name.trim();
+        let skill_name = entry.skill_name;
         const grade = entry.grade;
 
-        if (grade && skill_name !== "no-skill" && skill_name !== "") {
+        if (grade && skill_name !== "no-skill" && skill_name !== "" && skill_name !== undefined) {
+
+            skill_name = skill_name.trim()
 
             skills[skill_name] ? skills[skill_name]["grades"].push(grade) : skills[skill_name] = {skill: skill_name, grades: [grade]};
             skills[skill_name].ok = skills[skill_name].grades.every(number => parseInt(number) === 5)
@@ -78,11 +80,12 @@ function getSkillByChecklist() {
 
 async function buildSkillsFeedback(skills) {
 
+    const studentID = getTicketData().student_id
     const listOfSkills = Object.values(skills)
-    return await renderToCode("skillstable" , {skills:listOfSkills})
+    console.log(studentID)
+    return await renderToCode("skillstable" , {skills:listOfSkills, student_id: studentID})
 
 }
-
 
 function getGroupsFromChecklist() {
     return new Set(Object.values(checklist).map(item => item.group))

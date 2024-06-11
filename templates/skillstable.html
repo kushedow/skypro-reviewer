@@ -1,0 +1,10 @@
+<p><b>Давай пройдемся по твоим навыкам:</b></p>
+<br>
+{{#each skills}}
+{{#if this.ok}}
+✅ {{this.skill}} <br>
+{{/if}}
+{{#if this.failed}}
+🔄 Рекомендуем повторить: {{this.skill}}: <a href="https://skypro-reviewer.onrender.com/explain/{{this.slug}}" target="_blank">Открыть теорию</a><br>
+{{/if}}
+{{/each}}

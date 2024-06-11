@@ -27,12 +27,12 @@
       "js": [
         "scripts/utils/render_template.js",
         "scripts/content_layout.js",
-        "scripts/content_data.js",
         "scripts/content_handlers.js",
         "scripts/api/content_api.js",
 
         "scripts/softbox/softbox.js",
         "scripts/skills/skills.js",
+        "scripts/feedback/feedback.js",
 
         "scripts/content_ai.js",
         "scripts/content.js"
@@ -43,7 +43,7 @@
 
   "web_accessible_resources": [
     {
-      "resources": ["templates/checklist.html", "templates/softbox.html", "templates/failedskills.html"],
+      "resources": ["templates/checklist.html", "templates/softbox.html", "templates/skillstable.html"],
       "matches": ["<all_urls>"]
     }
   ],

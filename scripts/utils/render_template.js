@@ -48,12 +48,36 @@ function renderTemplate(template, data) {
 }
 
 
-async function renderFromTemplate(selector, templateName, data) {
+async function loadTemplate(templateName) {
 
     try {
         const response = await fetch(chrome.runtime.getURL(`templates/${templateName}.html`))
-        const templateCode = await response.text()
-        const renderedCode = render(templateCode, data)
+        return await response.text()
+    }
+    catch {
+        console.log(`Не удалось загрузить шаблон ${templateName}`)
+    }
+
+}
+
+async function renderToCode(templateName, data){
+    try {
+        const templateCode = await loadTemplate(templateName)
+        const renderedCode = render(templateCode, data).replace("\n", "")
+        console.log(renderedCode)
+        return renderedCode
+
+    }
+    catch {
+        console.log(`Не удалось отренерить шаблон ${templateName}`)
+    }
+
+}
+
+async function renderFromTemplate(selector, templateName, data) {
+
+    try {
+        const renderedCode = renderToCode(templateName, data)
         const nodeToUpdate = document.querySelector(selector)
         nodeToUpdate.innerHTML = renderedCode
     } catch {
@@ -61,5 +85,6 @@ async function renderFromTemplate(selector, templateName, data) {
     }
 
 }
+
 
 window.render = renderTemplate

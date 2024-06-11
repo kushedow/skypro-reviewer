@@ -141,16 +141,18 @@ function getTicketData(){
     const studentSolution = studentSolutionNode ? studentSolutionNode.innerHTML : ""
 
 
+
     return {
         ticket_id: window.location.pathname.split("/").pop(),
         student_full_name: studentFullName,
         student_first_name: studentFirstName,
         student_id: studentID,
         task_name: taskName,
+        is_coursework: taskName.toLowerCase().includes("курсовая"),
         stream_name: streamName,
         mentor_full_name: mentorFullName,
         criteria_url: criteriaURL,
-        student_solution: studentSolution
+        student_solution: studentSolution,
     }
 }
 

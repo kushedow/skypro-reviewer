@@ -79,12 +79,10 @@ function restoreOptions() {
         document.getElementById('softboxOn').value = softboxOn;
     });
 
-    chrome.storage.sync.get('skillsOn', function(items) {
-        skillsOn = items.skillsOn
-        document.getElementById('skillsOn').value = skillsOn;
-    });
-
-
+    // chrome.storage.sync.get('skillsOn', function(items) {
+    //     skillsOn = items.skillsOn
+    //     document.getElementById('skillsOn').value = skillsOn;
+    // });
 
 }
 
